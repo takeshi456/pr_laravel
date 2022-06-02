@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+    php:
+        container_name: food_web
+        build:
+            context: php
+        volumes:
+            - ../:/var/www/html
+        ports:
+            - ${WEB_PORT}:80
+
+    mysql:
+        container_name: food_db
+        image: mysql:8.0
+        platform: linux/x86_64
+        ports:
+            - ${DB_PORT}:80
+        environment:
+            MYSQL_DATABASE : ${DB_NAME}
+            MYSQL_USER : ${DB_USER}
+            MYSQL_ROOT_PASSWORD: ${DB_PASS}
+            MYSQL_PASSWORD: ${DB_PASS}
+
+    phpmyamin:
+        container_name: food_admin
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - ${MYADMIN_PORT}:80
+        depends_on:
+            - mysql
+        environment:
+            - PMA_HOST=food_db
+            - PMA_USER=${PMA_USER}
+            - PMA_PASSWORD=${PMA_PASS}
+
+
