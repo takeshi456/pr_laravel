@@ -13,11 +13,18 @@ class RecipeController extends Controller
      *
      *
      */
-    public function index()
+    public function index(Request $request)
 
     {
+        $keyword = $request->input('search');
         $recipes = DB::table('recipes')->select('id', 'name', 'calorie')->get();
+        if ($keyword) {
+            $recipes = DB::table('recipes')->where('name','like',"%$keyword%")->get();
+        }
+
         return view('recipe.index', compact(('recipes')));
+
+
     }
 
     /**
@@ -32,16 +39,16 @@ class RecipeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param \Illuminate\Http\Request $request
      *
      */
     public function store(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'name' => ['required'],
-            'calorie' => ['required'],
+            'calorie' => ['required', 'numeric', 'min:0'],
         ]);
+
 
         $recipe = new Recipe();
         $recipe->name = $request->input('name');
