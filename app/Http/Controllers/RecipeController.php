@@ -38,6 +38,11 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
+         $request->validate([
+            'name' => ['required'],
+            'calorie' => ['required'],
+        ]);
+
         $recipe = new Recipe();
         $recipe->name = $request->input('name');
         $recipe->calorie = $request->input('calorie');

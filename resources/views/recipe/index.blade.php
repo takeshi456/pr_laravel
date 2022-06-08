@@ -1,3 +1,9 @@
+@extends('layouts.layout')
+@section('title','レシピインデックス')
+
+
+@include('layouts.header')
+@section('content')
 <h1>レシピ一覧</h1>
 <table class="table">
     <thead>
@@ -34,4 +40,9 @@
     </tbody>
 </table>
 
-<a href="{{route(('recipe.create'))}}">新規登録ページへ</a>
+<a href="{{route(('recipe.create'))}}">レシピ追加ページへ</a>
+<a href="{{route(('menu.index'))}}">メニュー一覧ページへ</a>
+
+@endsection
+
+@include('layouts.footer')
